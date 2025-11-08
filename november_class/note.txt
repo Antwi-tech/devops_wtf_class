@@ -1,0 +1,76 @@
+
+
+
+
+
+CI/CD
+ci tools
+github actions
+gitlab ci/cd
+jenkins
+circleci
+travis ci
+Some cd tools
+ansible, terraform, helm, agrocd,shell scripting
+
+
+Declarative (written in statements) and 
+Scripted pipeline (written in groovy)
+
+Distributed Builds 
+Jenkins - master-agent architecture
+Github actions - hosted runners and self-hosted runners
+
+You can use docker as a build agent
+
+
+Jenkins and Java
+sudo apt update
+sudo apt install fontconfig openjdk-21-jre
+java --version
+
+
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update
+sudo apt install jenkins
+
+
+Common SMTP server ports are
+25, 465, 587, and 2525, with 587 being the recommended port for secure email submission, 465 for legacy SMTPS, and 25 for server-to-server communication. Many major email providers use these ports, such as Gmail (smtp.gmail.com on port 587) and Microsoft 365 (smtp.office365.com on port 587). 
+ 
+Common SMTP ports
+ 
+Port 25: The original SMTP port, now mainly used for server-to-server email relay and often blocked to prevent spam.
+Port 465: A legacy port for encrypted email using SMTP Secure (SMTPS). It is used when a direct, encrypted connection is needed.
+Port 587: The recommended port for secure email submission. It uses STARTTLS to upgrade a plain text connection to an encrypted one.
+Port 2525: An alternative port for email submission, often used when other ports are blocked. 
+ 
+Examples from major email providers
+ 
+Gmail: smtp.gmail.com on port 587 (StartTLS) or 465 (SSL).
+Microsoft 365: smtp.office365.com on port 587 (StartTLS).
+Yahoo Mail: smtp.mail.yahoo.com on port 465 (SSL).
+Hotmail/Outlook.com: smtp.live.com on port 587 (StartTLS) or 465 (SSL).
+Comcast: smtp.comcast.net on port 587. 
+ 
+GITHUB ACTIONS
+In github action , jobs are run on runners
+- Built in runners 
+- Self - hosted run ers - For complex jobs
+Workflows are alwas written in .github/workflow/file-name.yaml 
+name - Description of your workflow
+Event trigger - what makes the job start (on push, pull etc)
+Job- Describe as stage in jenkns 
+
+
+The syntax consits of lists, dictionaires and values
+List is represented with - but nested dictionaries are not
+YAML
+Yet Another MarkUp Language/ YAML Ain't MarkUp Language
+
+It is human readable unkine json which is machine readable 
+ 
