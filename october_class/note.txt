@@ -1,0 +1,193 @@
+OCTOBER 6th Going
+To view autrized ssh keys on the system use
+ssh-copy-id hostname@ip_addr
+
+SCP
+Just copies files from local to remote
+To copy files 
+scp file_name hostname@ip_addr:/home/hostname
+
+To copy a directory
+scp -r foldername hostname@ip_addr:/home/hostname
+
+
+Ports
+sftp -23
+stp - 25
+ssh - 22
+
+SFTP
+It copies the files and still olds teh session
+sftp hostname@ipaddr
+To check for local files use - lls
+To check for remote files use - ls
+
+commands to use in sftp
+get, put
+
+ rsync - a fast, versatile, remote (and local) 
+file-copying tool
+
+Compression : reduces the size of a file
+some commands: gzip filename, gunzip ..., bzip2 ..., xz ...,
+Archiveing: Combining multiple files into a single file
+(tape archive) 
+tar for compression
+
+VPN
+It uses the client server architecture
+Connect to remote servers securely over the internet or 
+private network 
+The data is encryted and goes througha secure tunnel
+If you have a vpn server you have to install
+the vlient
+
+SET UP A VPN SERVER
+launch an instance from aws, search for openvpn
+choose the free trial and set up a key
+set the ssh to your root 
+copy the code to the terminal as admin
+
+GIT and GitHub
+Git is a software and GitHub is a service
+git branching 
+git init
+git add 
+git commit 
+git config --global user.name
+git config --global user.email
+
+git cherry-pick
+git rebase
+git show - view some changes in branch
+git annotate - older version of git blame
+git blame - Assigns a change to the user , views 
+who made the last commit in a file
+git stash
+git restore u
+git reset --soft - Used to change the head of a
+commit to another commit
+
+git reflog - used to check all commits made and
+what you have done.It keeps track of whatever you
+have done
+
+	
+SERVERS
+ngrok - one of the tools used to connect to an aplication
+that only runs locally on sbd device. It creates a
+tunnel from the local host, it provides you with the
+url to view the application
+
+Assignment
+How to route traffic from your public ip to 
+private address to make an application accessible
+
+To chek if a port is bring used ps -ef | grep port_num
+
+to change the default port go into the etc/nginx/nginx.conf file
+and chane it
+
+The nginx html file can be found at /var/www/html
+
+
+Install MongoDB on Unbuntu
+curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
+ 
+echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+ 
+sudo apt update
+ 
+sudo apt install mongodb-org -y
+ 
+sudo systemctl start mongod
+
+sudo systemctl enable mongod
+ 
+
+
+After installing Nginx 
+Open http://localhost:80. Ensure you see Welcome to Nginx
+2. On your terminal, cd into /var/www/html. Use this command cd /var/www/html
+3. Remove everything in the <body></body> tag and replace with your content. Ensure you have writeable permission. If you don't edit it with chmod.
+4. Refresh your http://localhost:80 to be sure it displays your edited content
+5. Run this command on your terminal curl -O https://www.tooplate.com/zip-templates/2129_crispy_kitchen.zip
+6. Then run sudo apt install unzip -y
+
+sudo cp -r crispy-kitchen/* /var/www/html/
+ sudo cp -r 2129_crispy_kitchen/* /var/www/html/
+
+
+Clone the repository
+cd into StudyBud
+Install sudo apt install python3-pip and sudo apt install python3.12-venv
+Run python3 -m venv YOUR_ENV_NAME
+cd into $YOUR_ENV_NAME
+Run source bin/activate
+cd out of $YOUR_ENV_NAMEback to StudyBUD
+Run pip3 install -r requirements.txt  
+
+
+
+FIREWALLS
+It is a hardware or software that accpets or declines traffic coming to a network based on rules
+Functions
+Prevents unauthorized networks
+Filter netwrk packets
+Protect virus and hackers
+Enforce security headders
+
+TYPES OF FIREWALL
+Packet Filtering Firewall - works at layer 3
+Stateful Inspection - Remembers connection and Stateless 
+Proxy firewall
+Clud frewall
+Next Generation Firewall
+
+
+sudo apt update
+sudo apt install ufw
+
+Assignment
+Diable traficc from another user (ssh connect to another user)
+
+
+sudo ufw allow SSH
+
+
+
+basic UFW commands
+ 
+installaton and initialization: sudo apt install(Ubuntu) sudo yum install epel-release && sudo yum install UFW(centos). Use sudo apt/yum ufw enable(disable) "enable" will enbale the firewall and "disable" will disable the firewall
+ 
+Rules Management
+sudo ufw allow PORT_NUMBER or SERVICE_NAME: allow incoming traffic on the specificied port e.g sudo ufw allow 443 or sudo ufw allow https
+ 
+sudo ufw deny PORT_NUMBER or SERVICE_NAME: deny incoming traffic on the specificied port
+ 
+sudo ufw reject PORT_NUMBER or SERVICE_NAME: similar to deny but it also sends a rejection message
+ 
+sudo ufw allow PORT_NUMBER/PROTOCOL or SERVICE_NAME: allow incoming traffic on the specificied port e.g  sudo ufw allow 80/tcp or http/tcp
+ 
+sudo ufw delete RULE_NUMBER: deletes the specified  rule from the ruleset
+ 
+Status and Logging
+sudo ufw status: Display the current UFW status and rules
+sudo ufw status numbered: same as above but numbers the rules
+sudo ufw logging on: Enable ufw logging
+sudo ufw logging off: Disable ufw logging
+ 
+ 
+Resetting UFW
+sudo ufw reset:  Reset UFW to it's default settings
+
+sudo iptables -L -V
+
+iptables can be used to initiate firewalls too
+sudo iptables -L -n - used to view iptables
+
+iptables is the actual frewall 
+
+sudo iptables -A INPUT j 
+
+
