@@ -73,4 +73,220 @@ YAML
 Yet Another MarkUp Language/ YAML Ain't MarkUp Language
 
 It is human readable unkine json which is machine readable 
+
+Basic Data Types 
+Scaler - one name and value
+Lists - multiple things, values
+Dictiniaries: key-value pairs
+
+Special Characters
+# - comment
+: - separator
+- = lists
+
+use > or | to indicate multiple line command, or comments
+
+
+HOW TO HOST SELF-RUNNER
+github repo > setting> actions> runner> new rnner> choose system specification>
+cp the code into your terminal
+
+Tunner - The machine that will exucute your taks, like in jenkins we have the 
+slave and master, the slave will execute the jobs specified
+
+CONTIANER VS VIRTUAL MACHINE
+Contianer  are lgithweigth, can be resized, can run on no os environment
+thay all sgare resources from host 
+VM is more secure
+
+Packing an application and its dependencies into a single portable unit
+DOCKER
+A Docker image is a read-only template containing the instructions and 
+components necessary to create a Docker container. It serves as a blueprint 
+for deploying and running a containerized application. 
  
+  
+  
+            
+Here are the key characteristics of a Docker image:   
+  
+Read-only:
+Once built, a Docker image cannot be modified. Any changes made during the execution
+of a container (which is based on an image) are stored in a separate, writable layer 
+on top of the image.
+
+Layered structure:
+Docker images are composed of multiple layers, where each layer represents a specific 
+instruction in the Dockerfile (the script used to build an image). This layering makes 
+images efficient, as only changed layers need to be rebuilt when updates occur.
+
+Contains everything needed to run an application:
+An image bundles the application code, libraries, dependencies, tools, and 
+configurations required for the application to function correctly within a container.
+
+Portable and shareable:
+Images can be easily shared and distributed through Docker registries (like Docker Hub), 
+allowing consistent deployment across different environments.
+
+Template for containers:
+When you run a Docker image, it creates one or more instances of a Docker container, 
+each operating as an isolated process in its own environment.
+
+
+Here are the key characteristics of a Docker image:   
+  
+Read-only:
+Once built, a Docker image cannot be modified. Any changes made during the execution of
+ a container (which is based on an image) are stored in a separate, writable layer on top
+of the image.
+
+Layered structure:
+Docker images are composed of multiple layers, where each layer represents a specific 
+instruction in the Dockerfile (the script used to build an image). This layering makes 
+images efficient, as only changed layers need to be rebuilt when updates occur.
+
+Contains everything needed to run an application:
+An image bundles the application code, libraries, dependencies, tools, and configurations
+required for the application to function correctly within a container.
+
+Portable and shareable:
+Images can be easily shared and distributed through Docker registries (like Docker Hub), 
+allowing consistent deployment across different environments.
+
+Template for containers:
+When you run a Docker image, it creates one or more instances of a Docker container, 
+each operating as an isolated process in its own environment.
+
+Runtime Instance of an Image:
+A Docker container is essentially a running instance of a Docker image. Think of a 
+Docker image as a blueprint or a template, and a container as a house built from that 
+blueprint.
+
+Isolation and Portability:
+Containers provide a loosely isolated environment for your applications. This means the
+application within the container is largely independent of the host system's configuration 
+and dependencies. This isolation makes them highly portable, allowing you to run the s
+ame container consistently across different environments (development, testing, 
+
+
+
+production) and operating systems (Linux, Windows).
+
+Lightweight and Efficient:
+Unlike traditional virtual machines, which include a full operating system for each 
+application, Docker containers share the host operating system's kernel. This makes 
+them significantly more lightweight and efficient in terms of resource utilization.
+
+Consistency:
+By packaging all dependencies with the application, containers ensure that the application runs consistently regardless of the underlying environment, eliminating "it works on my machine" issues.
+Mutable:
+While Docker images are read-only, containers are mutable. This means you can make 
+changes to a running container, such as installing new packages or modifying configurations,
+although these changes are typically not persisted back to the original image unless explicitly committed.
+
+INSTALLING DOECKER 
+1. Delete old version of docker or check for existence
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+
+2.
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+ 
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
+
+
+DOCKER COMMANDS
+docker pull
+docekr start
+docker stop
+docker ps -a
+docker ps
+docker run
+docekr build
+docker volume
+docker rm 
+docker rmi
+docker restart
+docker images - template for creeating containers
+docker restart
+docker logs
+docker network
+docker inspect
+docker tag
+docker exec
+docker commit
+docker attach
+docker system prune
+docekr login
+docekr push
+
+
+After an image is created using dockerfile or pulled, we need to run the image
+to become a container   
+
+Run an image in the bg - use -d flag use -it flag   
+run with bash or sh to run commands in the contianer 
+use - --name plus name to name the contianer 
+
+-p 81:80 = port mapping from ost to contianer
+rm -f to remove a runnign container 
+docker prune -af - remove all running and stopped containers
+docker attach - runns the command and hangs your sdtn
+
+Use docker exec -it continaer_nmae bash to open the home of the container
+
+
+HOW TO MINIMISE YOUR DOCKER CONTIANER 
+- Use a small base image 
+- INstall dependencies in side the image rather than use latest which takes 
+up space
+
+.dockerignore
+Dockerfile
+Syntax is always  uppercase
+FROM - Base image
+Recmended- distroless, slim, alpine 
+dictoless- very secure because no os is needed
+
+RUN- Install anything needed to run the application
+avoid using multiple run commands
+don't add unnecessary files to your dockerfile
+
+WORKDIR - Where you want your project to run from
+
+COPY - copy sth from host to the contianer
+cp - Copy form the container to another path 
+ADD- Fetch dependncies from outside the hosts. This is normally url fom github etc
+
+CMD - Default value your caoniaer needs to run but it is only one
+Entry poitn - Cna be many 
+
+multistage doeker files prvents using huge sixe of dockerfile
+
+
+In a production env we use npm run built to create a production ready server
+
+IN development, we use the package.json to specify the dependencies but in 
+production it's different
+
+dicst folder is meant for production grade application
+This is where frameworks becomes useful 
+Normally t is the dist / .build prioduction reasy foolder that is copied
+and deployed unto the server
+
+Artefact- the result that comes after building
+
