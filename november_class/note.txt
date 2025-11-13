@@ -290,3 +290,30 @@ and deployed unto the server
 
 Artefact- the result that comes after building
 
+
+Contianers runs on bridged network adapter , they can communicate with each
+other but not the hosts 
+To solve tehis :
+1. Host the db on a server that has a public IP
+2. Host the dd in teh cloud 
+3. 
+
+Docker Networking
+How contianers communicate with each other 
+Docker creates 3 networks
+1. Bridged 
+2. hosts
+3.Null/none
+others: overlay , mac vlan
+
+
+How to create a docker network
+docker network --driver (bridge,host,null) desired_name
+docker network --driver bridge wtf-network
+
+
+Attach A Network TO A contianer That You created
+docker network connect
+docker run -t --name .... --network network_name
+
+HOW TO ATTACH A NETWORK TO A RUNNING CONTIANER 
