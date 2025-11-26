@@ -1,0 +1,60 @@
+version: "3.9"
+ 
+services:
+  api:
+    build:
+      context: ./           # Root of your nodejs backend
+      dockerfile: Dockerfile
+    container_name: node-api
+    env_file:
+      - ./env/api.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: always
+    networks:
+      - app-network
+ 
+  client:
+    build:
+      context: ./client     # Root of your frontend (React/Vue/Angular)
+      dockerfile: Dockerfile
+    container_name: node-client
+    env_file:
+      - ./env/client.env
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_started
+    restart: always
+    networks:
+      - app-network
+ 
+  mongo:
+    image: mongo:6.0
+    container_name: mongo-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+ 
+volumes:
+  mongo-data:
+ 
+networks:
+  app-network:
+    driver: bridge
