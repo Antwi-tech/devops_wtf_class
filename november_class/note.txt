@@ -317,3 +317,147 @@ docker network connect
 docker run -t --name .... --network network_name
 
 HOW TO ATTACH A NETWORK TO A RUNNING CONTIANER 
+
+
+
+DOCKER volume
+docker volume create wtf_volume
+wtf_volume
+afuaantwiwaa@DESKTOP-IMQ4NGF:~$ docker volume ls
+DRIVER    VOLUME NAME
+local     wtf_volume
+
+Types
+- Anonymous volume: NO name attached to the volume
+- Named volume
+
+ docker run -d --name anonymous_contianer -p 5002:5173 -v /volume:/app  wtf_backend:v1
+5a92c0008557587e9b90dc1deca164e032b38b1b43edec3e6b612935915387b6 
+This is how to do a point mount
+stop contianers using the volume beofre deleting the volume
+
+To attach a volume to a contianer: docker run -d -v <volume_name>:<path_in_container> <image_name>
+eg:
+Attach an existing volume named mydata to /app/data inside the container:
+docker run -d --name mycontainer -v mydata:/app/data myimage
+
+docker run -d --name wtf_nginx -p 85:80 -v .:/usr/share/nginx/html nginx
+
+
+
+It is the slash that differs a vulume and a bind mount. A bind mount has a 
+slash. Exmples::
+docker run -d --name NAME -p HOST_PORT:CONTAINER_PORT -v /app IMAGE_NAME OR ID => anonymous
+ 
+docker run -d --name NAME -p HOST_PORT:CONTAINER_PORT -v VOLUME_NAME:/app IMAGE_NAME OR ID  => named volume
+ 
+docker run -d --name NAME -p HOST_PORT:CONTAINER_PORT -v /volume:/app IMAGE_NAME OR ID => bind mount
+
+
+"""
+Bind mount:
+• You control the host path.
+• You point to an exact directory on your system.
+• Good for development, editing code live.
+• Breaks if host path changes.
+• Example:
+docker run -v /home/user/app:/usr/src/app node
+volume:
+• Docker controls the storage location.
+• You reference it by a name, not a path.
+• Good for production and long term data.
+• Easier to move, backup, and manage.
+• Example:
+docker volume create appdata
+docker run -v appdata:/var/lib/mysql mysql
+"""
+
+HOW TO PUSH THE CONTIANER/IMAGE TO DOCKER 
+1. Docker image but be the smae as the one on docker hub
+2. provide credentials
+
+
+TO PUSH A DOCKER IMAGE TO DOCKER Hub
+- Tag the docker image , you can use the same name
+:docker tag mongo:6 antwiwaa/mongo:6
+-PUsh Image: docker push antwiwaa/mongo:6
+
+DOker compose
+It is used to run multiple application of a 3 tier application
+It is a sinlge node architecture but also provide container orchestration by 
+runnung the 3 tier application with one command
+Horizontal scaling: by using docker compose up --scale 
+
+use: docker-compose up -d --build 
+
+HOW TO USE DOCKER AS A BUILD agent/ Build tools
+Jenkins pulls the image from docker and after uses it as a node and deletes it after
+It is used to safe cost and for distributed builds 
+
+pipeline {
+    agent {
+      docker {
+        image "node:22.21.0-slim"
+        args '-u root:root'
+         }
+      }
+ 
+ 
+    stages {
+ 
+        stage('Checkout') {
+            steps {
+                git branch: 'peter-branch',
+                    url: 'https://github.com/bigcephas1/React-ToDoList.git'
+            }
+        }
+ 
+        stage('Frontend Build') {
+            steps {
+                dir('dive-react-app') {
+                    echo "Installing frontend dependencies"
+                    sh 'npm install'
+ 
+                    echo "Running lint"
+                    sh 'npm run lint'
+ 
+                    echo "Building frontend"
+                    sh 'npm run build'
+                }
+            }
+        }
+ 
+        stage('Backend Install') {
+            steps {
+                dir('backend') {
+                    echo "Installing backend dependencies"
+                    sh 'npm install'
+ 
+                    echo "Running backend tests (instead of starting server)"
+                    sh 'npm test || true'   // prevents failure if no tests exist
+                }
+            }
+        }
+ 
+    }
+ 
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            emailext(
+                subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: "The build ${env.BUILD_URL} completed successfully.",
+                to: "ukpabipeteru@gmail.com"
+            )
+        }
+        failure {
+            emailext(
+                subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: "The build ${env.BUILD_URL} failed. Please check the logs.",
+                to: "ukpabipeteru@gmail.com"
+            )
+        }
+    }
+}
