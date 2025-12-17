@@ -461,3 +461,154 @@ pipeline {
         }
     }
 }
+
+
+
+
+We’re provisioning resources using  terraform and he’s explaining resources in cloud
+NACL
+NACL is in charge of controlling what enters the subnets in the VpC
+Who has access to the resources. It is a protection to the subnet. 
+It prevents or permits the traffic comming- NACL
+Traficc can enter the vpc but if it is not recognised by the NACL,
+it cannot access the internet
+
+The load balancer is what will take the traffic to the subnet and
+distribute it evenly 
+Private subnet does not have gatway it only has local distirbution 
+iNTERNET GAEWAY- Router in the cloud
+
+Security group is instance level firewall. It is stateful
+NACL is subnet firewall. It is stateless.(Remembers who has 
+connected before)
+
+
+Class A - /8, Class B subnet- /16
+
+User data is simply a shell script that is executed to install
+services / images / programs when the instances is created x
+
+
+Infrastructure as Code(IaC)
+It is the process of managing and provisioning insfrastructure (servers, network,
+storage, load balancers.) Anything needed to run your application perfectly 
+
+Code written to create resources in cloud 
+Keywords
+- Repeatable
+- Consistent
+- Version-controlled
+
+Problems IaC solves
+- Manual errors
+
+Terraform is declarative . It uses providers to create those resources on 
+platfors such as aws, azure etc
+
+Some Terraform Commands:
+- write 
+- plan 
+- apply
+- trac state
+
+How To communicate with Cloud 
+- Dashboard
+- API 
+- Cloud Development Kit
+- CLI 
+
+WHERE IaC is used
+- Cloud
+- On premse
+- Hybrid cloud 
+- Containerizariton and orchestration
+- Networking
+
+HOW TO COMMUNICATE WITH CLOUD PROVIDER
+- Dashbaord
+- API
+- Cloud CDK
+- 
+
+tERRAFORM- for provisioning
+Ansible for configuration
+cli
+
+idempotency - No change occurs. eg Terraform, Ansible
+Terraform state  file is used to regulate terraform it is the 
+brian of terraform
+
+Data- to search for data or resources
+Resource block - To create a resource 
+ nohup java -jar /usr/share/java/jenkins.war --httpPort=8082 > ~/jenkins.log 2>&1 &
+
+
+
+Terraform cal also run on multicloud providers, it can run on aws at the same
+time azure, gcp etc
+It is written in Hashicorp Configuration Language
+
+Terraform architecture
+- providers
+- resources
+- modules
+- state file
+- cli  
+
+FilesIn a Terraform project
+- main.tf - Entry point of the project 
+- data.tf - Used to query data in the cloud
+- outpiut.tf - Get information form the resource created 
+- variables.tf - Define a variable, state the type the variable will be
+- terraform.tfstate
+- providers.tf
+- terraform.tfvars
+
+VPC- Virtaul Private CLoud is your own private spae iside cloud where you create
+your own resources eg: instances , bucket etc
+
+Subnet- Breaking your own personal vpc into sub network 
+You can create a private subnet and a public subnet, the private subnet is used
+for perosnal sthings, eg: db whilst the public subnet will be host the app
+
+NACL - Network Access Control List It is the first type of security you can 
+find in vpc . It is stateless. It is subnet level security 
+
+Internet GAEWAY- Router to the internet. Path from your VPC to the internet 
+only if your NACL allows it
+
+NACL controls what come in and gateway is for in and out
+Route table is a set of rules that tells ypur VPC where to send the traffic to and
+how to send it  
+Private subnet does not have a route table 
+Route tables have 2 rules: Destination and target
+
+NAT allows the private subnet to access the internet 
+Load balancers distributes traffic
+You create your instances within your public subnet and the laod balancers 
+will istribute the traffic between those instances 
+
+
+CIDR - Classless Interdomian Routing 
+
+Regoin - It's a geographic area where aws have theri data centres/ has more than
+1 availability zone 
+Availability zone- It is a cluster of data centers within a regoin
+
+If you host your applicaton to us-east-1 does it host it in all 3 availability zone?
+How do we view the resources we have created on the platform like aws like the 
+vpc, 
+
+As part ot terraform we can use user data to specify what installation we can 
+have in our instance , so that means , we can either use this option or use 
+a script via Jenkins to build contianer etc
+
+
+ANSIBLE
+the inventory file tells ansible what machine to manage
+
+ansible all -m ping -i inventory.ini
+ansible all -m command -a "uptime" -i inventory.ini
+
+Two modules in ansible
+Shell moudle and command module
