@@ -1,0 +1,134 @@
+Did Terrafrom from 25th November but the notes are here
+
+Infrastucture As Code
+It is the provisioning of computing infrastructure using machine-readable config files
+
+Key Words
+- Repeatable
+- Consistent (Idempotency)
+- Version-controlled
+
+IaC ensures environments have the same ports
+A script file is used to create identical environments
+IaC runs in minutes 
+
+Some IaC tools are Terraform and Ansible
+Terrafrom is declarative and Ansible is both declarative and imperative 
+
+Terraform uses provider plugins to fetch data from aws and other cloud platforms to 
+communicate with them 
+
+Terrafrom drift- when your terrafrom is not in sync with what you did on the cloud
+platform
+
+WAYS TO COMMUNICATE WITH CLOUD
+- Dashboard
+- API
+- Cloud Development Kit
+- CLI
+
+Terraform is an Open-source IaC tool developed by HashiCorp for provisioning and
+managing cloud infrastructure
+It is declarative , written in HashiCorp Configuration Language 
+init - installs dependencies
+plan- shows expected output / preview 
+apply - implementation of resources
+destroy - removes all terraform created resouces 
+
+state file - It is the brain of terraforrm 
+The state file gets created when a terraform apply is done
+
+INTERVIEW: Basically on state files and module
+Terraform uses a modular structure. It uses a root and child module
+
+HOW TO GET STARTED WITH TERRAFORM 
+- Install terrafrom : use:
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
+
+- Install AWS CLI : Becuase terrafom uses aws cli under the hood to execute it 
+- Configure aws with your generated aws acces key id and secret access key and default
+region for creation of resources . Create te access keys from security credentials on aws 
+Select Commad Line Interface as the use case 
+
+
+Key Structure of a Terraform module
+- main.tf: Entry point of the project , it is the root . 
+- data.tf: Query information i the cloud 
+- providers.tf: 
+- terraform.tfvars: Assign value to a variable from the variables file
+- output.tf: Retrieve information fom cloud
+- variables.tf: Define/ declare variables
+
+Thnings to Start creating in modules of EC2 Instance
+- security group
+- vpc
+- NACL
+- NAT
+- ROUTE TABLE
+- subnet
+- route table association
+- ec2 instace 
+- internet gateway
+
+
+Virtual Private Cloud
+Personal sapce in the cloud. Reosuces in AWS are monstly created in your own VPC
+
+Subnet: Breaking your vpc space into small networks
+
+Network Access Control Link: It's a the first level of security in VPC that protects
+your subnet from unwanted persons.It is stateless, it doesn't remember who visited 
+the space. Controls what comes in
+
+Internet gateway: Route to the internet. How data travels from outside the vpc.
+It's a door in and out of the vpc
+
+Route table: Routing rules anout the path to your workload. It has a destination and 
+target
+to go in and come out 
+Route table for public ip can access the internet 
+Route table for private ip cannot access the internet. It can only communicate within itself
+Load balancer: Distribute traffic amongst your services 
+
+Private subnet uses the NAT to let data go to the internet. Can only sent out 
+request  
+Security group: Instace level security that enusres that he right traffic
+comes to the resouce/ instance 
+
+Ways to pass a variable in Terraform
+ 
+prompt from terraform apply
+ 
+Environment variables
+TF_VAR_env=stage
+or
+export TF_VAR_env=stage
+ 
+ 
+CLI -var-file
+terraform apply -var-file="prod.tfvars"
+ 
+ 
+CLI -var
+terraform apply -var="env=stage"
+ 
+ 
+auto.tfvars / terraform.tfvars
+env = "prod"
+ 
+ 
+Default values in the variable block
+ 
+variable "env" {
+  default = "dev"
+}
+ 
+ 
+global varible like using "locals block"
+ 
+locals {
+  project_name = "myapp"
+  owner        = "peter"
+}
