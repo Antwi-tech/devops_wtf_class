@@ -1,4 +1,14 @@
-.terraform/
+.terraform*
 *.tfstate
 *.tfstate.backup
-*.tfstate.backup
+.terraform.lock.hcl
+my_key.pub
+# .trunk*
+# crash.log
+# override.tf
+# override.tf.json
+# *_override.tf
+# *_override.tf.json
+# .terragrunt-cache/
+# .terraformrc
+# .terragrunt.hcl
