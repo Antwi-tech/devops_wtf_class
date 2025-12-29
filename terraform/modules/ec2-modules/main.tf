@@ -35,6 +35,22 @@ resource "aws_instance" "my_wtf_server" {
     tags ={
           Name= "${local.prefix}-server"
     }
+
+    provisioner "remote-exec" {
+      inline = [ 
+        "sudo apt update",
+        "sudo apt install -y nginx",
+        "sudo systemctl start nginx",
+        "echo 'hello everyone' >  /var/www/html/index.html",
+        "sudo systemctl restart nginx"
+       ]
+      connection {
+        type        = "ssh"
+        host        = self.public_ip
+        user        = "ubuntu"
+        private_key = file("ec2-modules/my_key.pub")
+      }
+    }
 }
 
 resource "aws_key_pair" "my_wtf_key" {
