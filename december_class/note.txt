@@ -132,3 +132,5 @@ locals {
   project_name = "myapp"
   owner        = "peter"
 }
+
+Terraform workspace: A way to sub define the terraform configuration file
